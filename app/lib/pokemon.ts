@@ -229,10 +229,10 @@ export class Pokemon {
   static extractSpriteOptions(pkApiSprites: PkApiSpritesRoot) {
     const spriteOptions: PokemonSpriteOptions = {};
     spriteOptions.default = {
-      label: "Default",
+      label: "Default Generation",
       items: {
         default: Pokemon.extractGameSpriteOptions(
-          "default",
+          "Default Game",
           pkApiSprites as unknown as PkApiSpritesGame
         ),
       },
