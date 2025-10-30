@@ -13,7 +13,7 @@ definePageMeta({
 // DATA
 ///////
 
-const unitType = useState("unitType", () => "imperial" as UnitType);
+const useMetricUnits = useState("useMetricUnits", () => true);
 const route = useRoute();
 let pokemonId = 0;
 if (typeof route.params.id == "string") {
@@ -29,6 +29,16 @@ const pokemon = ref(
     ? Pokemon.fromPkApiPokemon(pokemonResult.data.value)
     : null
 );
+
+// COMPUTED
+///////////
+
+const unitType: ComputedRef<UnitType> = computed(() => {
+  if (useMetricUnits.value) {
+    return "metric";
+  }
+  return "imperial";
+});
 </script>
 
 <template>

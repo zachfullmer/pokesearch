@@ -1,14 +1,16 @@
 <script setup lang="ts">
+import IconGear from "~/assets/icons/gear.svg";
+
 // DATA
 ///////
 
+const checkboxAltText = `Broken string matching will match any name that contains the search string, even if there are characters in between. For example, "venat" will match "venonat".`;
 const route = useRoute();
 const searchString = useState("searchString", () => "");
 const useBrokenStringMatching = useState("useBrokenStringMatching", () => true);
+const showSettingsMenu = ref(false);
 // elements
 const searchBarEl: Ref<HTMLInputElement | undefined> = ref();
-
-const checkboxAltText = `Broken string matching will match any name that contains the search string, even if there are characters in between. For example, "venat" will match "venonat".`;
 
 // EVENT HANDLERS
 /////////////////
@@ -53,9 +55,13 @@ onBeforeUnmount(() => {
             id="brokenStringMatching"
             v-model="useBrokenStringMatching"
           />
-          <label for="brokenStringMatching" :title="checkboxAltText">Broken string matching</label>
+          <label for="brokenStringMatching" :title="checkboxAltText"
+            >Broken string matching</label
+          >
         </div>
+        <IconGear class="settings-icon-button" @click="showSettingsMenu = !showSettingsMenu" />
       </div>
+      <SettingsMenu :show="showSettingsMenu" />
     </div>
     <div class="page">
       <div class="content-pane">
@@ -74,6 +80,8 @@ onBeforeUnmount(() => {
   margin: 0;
   overflow-x: hidden;
 }
+
+/* Nav Bar */
 
 .nav-bar {
   --border-width: 0.5em;
@@ -100,6 +108,8 @@ onBeforeUnmount(() => {
   box-sizing: border-box;
 }
 
+/* Nav Bar contents */
+
 .nav-bar-items {
   position: absolute;
   display: flex;
@@ -124,6 +134,22 @@ onBeforeUnmount(() => {
 .search-bar {
   margin-right: 1em;
 }
+
+.settings-icon-button {
+  flex: 0 0 auto;
+  width: 2em;
+  height: 2em;
+  margin: 0 1em;
+  cursor: pointer;
+}
+.settings-icon-button:hover {
+  color: var(--bg2);
+}
+.settings-icon-button:active {
+  color: var(--bg3);
+}
+
+/* Page contents */
 
 .page {
   display: flex;
