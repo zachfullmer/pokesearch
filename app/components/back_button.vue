@@ -22,5 +22,11 @@ import IconArrowLeft from "~/assets/icons/arrow_left.svg";
   border: solid 1px #5f5f79;
   border-radius: 0.2em;
   cursor: pointer;
+  transition: all 0.1s linear;
+}
+
+.back-button:hover {
+  background: var(--bg3);
+  transition: all 0.1s linear;
 }
 </style>
