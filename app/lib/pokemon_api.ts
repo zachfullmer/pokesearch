@@ -7,7 +7,7 @@ import { Pokemon, type PokemonSerialized } from "./pokemon";
  */
 export async function getPokemonWithId(id: string): Promise<Pokemon | null> {
   const endpoint = `/api/pokemon/${id}`;
-  const { data } = useAsyncData(
+  const { data } = await useAsyncData(
     endpoint,
     async () => {
       // If the Pokémon is not cached, load it from the API. If the API
