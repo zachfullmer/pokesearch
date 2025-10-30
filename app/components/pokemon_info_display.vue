@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // scripts
 import { Pokemon, type PkApiPokemon, type UnitType } from "~/lib/pokemon";
+import { POKEMON_TYPE_LIST } from "~/lib/pokemon_types";
 import { capitalize } from "~/lib/string_ops";
 
 // DATA
@@ -175,7 +176,7 @@ watch(
 <template>
   <div class="pokemon-container">
     <div class="pokemon-info-container">
-      <h2>{{ pokemonNameCapitalized }}</h2>
+      <div class="pokemon-name">{{ pokemonNameCapitalized }}</div>
       <div class="type-container">
         <TypeBadge v-for="type in pokemon.types" :type="type" />
       </div>
@@ -242,15 +243,28 @@ watch(
 <style scoped>
 .pokemon-container {
   display: flex;
+  gap: 1em;
+  margin: 1em 0;
 }
 
 .pokemon-info-container {
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  max-width: 300px;
+  gap: 1em;
+}
+
+.pokemon-name {
+  font-size:x-large;
 }
 
 .type-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.6em;
+  width: 100%;
 }
 
 .pokemon-image-info-container {
