@@ -180,7 +180,7 @@ watch(
       <div class="type-container">
         <TypeBadge v-for="type in pokemon.types" :type="type" />
       </div>
-      <table>
+      <table class="pokemon-info-table">
         <tbody>
           <tr>
             <td>Height:</td>
@@ -265,6 +265,15 @@ watch(
   flex-wrap: wrap;
   gap: 0.6em;
   width: 100%;
+}
+
+.pokemon-info-table {
+  font-size: large;
+}
+
+/* Pad only the first cell in each row */
+.pokemon-info-table td:first-child {
+  padding-inline-end: 1em;
 }
 
 .pokemon-image-info-container {
