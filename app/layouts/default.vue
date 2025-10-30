@@ -8,6 +8,8 @@ const useBrokenStringMatching = useState("useBrokenStringMatching", () => true);
 // elements
 const searchBarEl: Ref<HTMLInputElement | undefined> = ref();
 
+const checkboxAltText = `Broken string matching will match any name that contains the search string, even if there are characters in between. For example, "venat" will match "venonat".`;
+
 // EVENT HANDLERS
 /////////////////
 
@@ -51,7 +53,7 @@ onBeforeUnmount(() => {
             id="brokenStringMatching"
             v-model="useBrokenStringMatching"
           />
-          <label for="brokenStringMatching">Broken string matching</label>
+          <label for="brokenStringMatching" :title="checkboxAltText">Broken string matching</label>
         </div>
       </div>
     </div>
