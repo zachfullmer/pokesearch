@@ -1,0 +1,96 @@
+:root {
+  --type-fg-normal: #ffffff;
+  --type-bg-normal: #a0a3a0;
+  --type-fg-fighting: #ffffff;
+  --type-bg-fighting: #ff8100;
+  --type-fg-flying: #042a49;
+  --type-bg-flying: #82baef;
+  --type-fg-poison: #f0daff;
+  --type-bg-poison: #923fcc;
+  --type-fg-ground: #ffe3cc;
+  --type-bg-ground: #92501b;
+  --type-fg-rock: #2b2500;
+  --type-bg-rock: #b1ab82;
+  --type-fg-bug: #262b00;
+  --type-bg-bug: #92a312;
+  --type-fg-ghost: #ffe3ff;
+  --type-bg-ghost: #713f71;
+  --type-fg-steel: #002835;
+  --type-bg-steel: #60a3b9;
+  --type-fg-fire: #290000;
+  --type-bg-fire: #e72324;
+  --type-fg-water: #f3f8ff;
+  --type-bg-water: #2481ef;
+  --type-fg-grass: #072200;
+  --type-bg-grass: #3da324;
+  --type-fg-electric: #2c2200;
+  --type-bg-electric: #fac100;
+  --type-fg-psychic: #eed4dc;
+  --type-bg-psychic: #ef3f7a;
+  --type-fg-ice: #003d4e;
+  --type-bg-ice: #3dd9ff;
+  --type-fg-dragon: #00073a;
+  --type-bg-dragon: #4f60e2;
+  --type-fg-dark: rgb(29, 3, 0);
+  --type-bg-dark: #4f3f3d;
+  --type-fg-fairy: #ffffff;
+  --type-bg-fairy: #ef71ef;
+  --type-fg-unknown: #ffffff;
+  --type-bg-unknown: #000000;
+}
+
+@keyframes stellar-rainbow {
+  10% {
+    color: var(--type-fg-psychic);
+    background: var(--type-bg-psychic);
+  }
+  20% {
+    color: var(--type-fg-fighting);
+    background: var(--type-bg-fighting);
+  }
+  30% {
+    color: var(--type-fg-electric);
+    background: var(--type-bg-electric);
+  }
+  40% {
+    color: var(--type-fg-bug);
+    background: var(--type-bg-bug);
+  }
+  50% {
+    color: var(--type-fg-grass);
+    background: var(--type-bg-grass);
+  }
+  60% {
+    color: var(--type-fg-flying);
+    background: var(--type-bg-flying);
+  }
+  70% {
+    color: var(--type-fg-dragon);
+    background: var(--type-bg-dragon);
+  }
+  80% {
+    color: var(--type-fg-poison);
+    background: var(--type-bg-poison);
+  }
+  90% {
+    color: var(--type-fg-ghost);
+    background: var(--type-bg-ghost);
+  }
+  100% {
+    color: var(--type-fg-fire);
+    background: var(--type-bg-fire);
+  }
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  color: #feb;
+  background: #123;
+  font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
+}
+
+.nuxt-link-unstyled {
+  text-decoration: none;
+  color: inherit;
+}
