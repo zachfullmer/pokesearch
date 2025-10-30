@@ -46,7 +46,11 @@ onBeforeUnmount(() => {
             v-model="searchString"
             class="search-bar"
           />
-          <input type="checkbox" id="brokenStringMatching" v-model="useBrokenStringMatching" />
+          <input
+            type="checkbox"
+            id="brokenStringMatching"
+            v-model="useBrokenStringMatching"
+          />
           <label for="brokenStringMatching">Broken string matching</label>
         </div>
       </div>
@@ -111,6 +115,8 @@ onBeforeUnmount(() => {
 
 .search-controls {
   flex: 1 0 auto;
+  display: flex;
+  align-items: center;
 }
 
 .search-bar {

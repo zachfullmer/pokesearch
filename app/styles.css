@@ -100,3 +100,36 @@ body {
   text-decoration: none;
   color: inherit;
 }
+
+/* Still the only cross-browser way to recolor check boxes */
+
+input[type="checkbox"] {
+  appearance: none;
+  position: relative;
+  width: 1.2em;
+  height: 1.2em;
+  background: var(--bg1);
+  border: 1px solid var(--fg1);
+  border-radius: 0.2em;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--bg1);
+  border-color: var(--fg1);
+}
+
+input[type="checkbox"]::after {
+  display: none;
+  content: "✔";
+  color: var(--fg1);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, calc(-50% - 1px));
+}
+
+input[type="checkbox"]:checked::after {
+  /* show the checkmark */
+  display: block;
+}
