@@ -38,15 +38,21 @@ const pokemonNameCapitalized = computed(() => {
 .pokemon-card {
   display: flex;
   flex-direction: column;
-  border: solid 1px white;
+  background: var(--bg2);
+  border: solid 1px var(--fg1);
   border-radius: 0.3em;
+  transition: all 0.1s linear;
+}
+
+.pokemon-card:hover {
+  background: var(--bg3);
+  transition: all 0.1s linear;
 }
 
 .card-image-container {
   width: 180px;
   height: 180px;
   padding: 1em;
-  border-bottom: solid 1px white;
 }
 
 .card-image-container img {

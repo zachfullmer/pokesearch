@@ -51,8 +51,9 @@ const pokemonListFiltered = computed(() => {
 <style>
 .pokemon-card-gallery {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
-  margin-bottom: 20em;
+  padding-bottom: 20em;
 }
 </style>

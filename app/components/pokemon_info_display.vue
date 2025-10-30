@@ -261,7 +261,7 @@ watch(
   width: 300px;
   height: 300px;
   padding: 1em;
-  border: solid 1px white;
+  border: solid 1px var(--bg3);
 }
 
 .pokemon-image-container img {

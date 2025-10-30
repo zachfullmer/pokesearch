@@ -1,4 +1,10 @@
 :root {
+  --fg1: #123;
+  --bg1: #fec;
+  --bg2: rgb(209, 197, 173);
+  --bg3: rgb(204, 180, 132);
+  --accent: darkred;
+  /* type colors */
   --type-fg-normal: #ffffff;
   --type-bg-normal: #a0a3a0;
   --type-fg-fighting: #ffffff;
@@ -85,8 +91,8 @@
 body {
   padding: 0;
   margin: 0;
-  color: #feb;
-  background: #123;
+  color: var(--fg1);
+  background: var(--bg1);
   font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
 }
 
