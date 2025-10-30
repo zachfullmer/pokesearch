@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // scripts
-import { Pokemon, type PkApiPokemon, type UnitType } from "~/lib/pokemon";
+import { Pokemon, type UnitType } from "~/lib/pokemon";
 import { getPokemonWithId } from "~/lib/pokemon_api";
 
 definePageMeta({
@@ -15,20 +15,12 @@ definePageMeta({
 
 const useMetricUnits = useState("useMetricUnits", () => true);
 const route = useRoute();
-let pokemonId = 0;
+let pokemonId = "0";
 if (typeof route.params.id == "string") {
-  pokemonId = parseInt(route.params.id);
+  pokemonId = route.params.id;
 }
 
-const pokemonResult = await useAsyncData(() => {
-  return getPokemonWithId(pokemonId);
-});
-
-const pokemon = ref(
-  pokemonResult.data.value
-    ? Pokemon.fromPkApiPokemon(pokemonResult.data.value)
-    : null
-);
+const pokemon: Ref<Pokemon | null> = ref(await getPokemonWithId(pokemonId));
 
 // COMPUTED
 ///////////

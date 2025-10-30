@@ -119,48 +119,85 @@ export type PokemonSpriteOptions = {
   [genKey: string]: PokemonSpriteGenOptions;
 };
 
+export interface PokemonSerialized {
+  /**
+   * Unique identifier for this Pokémon in the PokéAPI database.
+   */
+  id: number;
+  /**
+   * Name of the Pokémon, lower case.
+   */
+  name: string;
+  /**
+   * Height of the Pokémon in decimeters. The conversion functions for displaying this number in
+   * a more useful format are in `pokemon_info_display.vue`.
+   */
+  heightDm: number;
+  /**
+   * Weight of the Pokémon in hectograms. The conversion functions for displaying this number in
+   * a more useful format are in `pokemon_info_display.vue`.
+   */
+  weightHg: number;
+  /**
+   * A list of type names, lower case.
+   */
+  types: PokemonType[];
+  /**
+   * A list of ability names, lower case.
+   */
+  abilities: string[];
+  /**
+   * A map of the sprites listed at the root of the PkApiPokemon.sprite object.
+   */
+  defaultSprites: PokemonSpriteGameOptions;
+  /**
+   * PokemonSpriteOptions used to build the sprite selection dropdowns in the GUI.
+   */
+  spriteOptions: PokemonSpriteOptions;
+}
+
 /**
  * The information needed to populate the PokemonInfoDisplay component. Most of the information
  * is copied over from a PkApiPokemon directly, but on construction this class will build its own
  * set of sprite information to populate the sprite switcher GUI.
  */
-export class Pokemon {
-  /**
-   * Unique identifier for this Pokémon in the PokéAPI database.
-   */
+export class Pokemon implements PokemonSerialized {
   id: number = -Infinity;
-  /**
-   * Name of the Pokémon, lower case.
-   */
   name: string = "MISSINGNO";
-  /**
-   * Height of the Pokémon in decimeters. The conversion functions for displaying this number in
-   * a more useful format are in `pokemon_info_display.vue`.
-   */
   heightDm: number = 0;
-  /**
-   * Weight of the Pokémon in hectograms. The conversion functions for displaying this number in
-   * a more useful format are in `pokemon_info_display.vue`.
-   */
   weightHg: number = 0;
-  /**
-   * A list of type names, lower case.
-   */
   types: PokemonType[] = ["unknown"];
-  /**
-   * A list of ability names, lower case.
-   */
   abilities: string[] = [];
-  /**
-   * A map of the sprites listed at the root of the PkApiPokemon.sprite object.
-   */
   defaultSprites: PokemonSpriteGameOptions = { label: "default", items: {} };
-  /**
-   * PokemonSpriteOptions used to build the sprite selection dropdowns in the GUI.
-   */
   spriteOptions: PokemonSpriteOptions = {};
 
   static default: Readonly<Pokemon> = new Pokemon();
+
+  static fromSerialized(pokemonSerialized: PokemonSerialized): Pokemon {
+    const pk = new Pokemon();
+    pk.id = pokemonSerialized.id;
+    pk.name = pokemonSerialized.name;
+    pk.heightDm = pokemonSerialized.heightDm;
+    pk.weightHg = pokemonSerialized.weightHg;
+    pk.types = [...pokemonSerialized.types];
+    pk.abilities = [...pokemonSerialized.abilities];
+    pk.defaultSprites = structuredClone(pokemonSerialized.defaultSprites);
+    pk.spriteOptions = structuredClone(pokemonSerialized.spriteOptions);
+    return pk;
+  }
+
+  toSerialized(): PokemonSerialized {
+    return {
+      id: this.id,
+      name: this.name,
+      heightDm: this.heightDm,
+      weightHg: this.weightHg,
+      types: [...this.types],
+      abilities: [...this.abilities],
+      defaultSprites: structuredClone(this.defaultSprites),
+      spriteOptions: structuredClone(this.spriteOptions),
+    };
+  }
 
   static fromPkApiPokemon(pkApiPokemon: PkApiPokemon): Pokemon {
     const pk = new Pokemon();
