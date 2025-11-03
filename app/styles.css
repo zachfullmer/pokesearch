@@ -2,6 +2,7 @@
   --content-width: 1000px;
   /* theme colors */
   --fg1: #123;
+  --fg2: rgb(151, 155, 158);
   --bg1: #fec;
   --bg2: rgb(209, 197, 173);
   --bg3: rgb(204, 180, 132);
@@ -145,6 +146,12 @@ input[type="checkbox"]:checked::after {
   justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
+  transition: all 0.3s linear;
+}
+
+.pokemon-card-gallery.loading {
+  opacity: 0.5;
+  transition: all 0.3s linear;
 }
 
 .trailing-gap {
