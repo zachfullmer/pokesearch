@@ -15,7 +15,7 @@ const emit = defineEmits<{
 }>();
 
 const model = defineModel({ default: 1 });
-model.value = props.minPage;
+model.value = Math.max(props.minPage, Math.min(model.value, props.maxPage));
 
 // METHODS
 //////////
