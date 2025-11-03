@@ -19,8 +19,11 @@ const useBrokenStringMatching = useState("useBrokenStringMatching", () => true);
 const loading = ref(false);
 const pokemonList: Ref<(Pokemon | null)[]> = ref([]);
 
+// COMPUTED
+///////////
+
 watch(
-  props,
+  [() => props.start, () => props.end],
   async () => {
     loading.value = true;
     const newPokemonList = await getAllPokemonWithIds(
@@ -33,9 +36,6 @@ watch(
   },
   { immediate: true }
 );
-
-// COMPUTED
-///////////
 
 const pokemonListFiltered: ComputedRef<Pokemon[]> = computed(() => {
   if (searchString.value.length == 0) {
@@ -55,7 +55,10 @@ const pokemonListFiltered: ComputedRef<Pokemon[]> = computed(() => {
 </script>
 
 <template>
-  <div class="pokemon-card-gallery loading" :style="{ opacity: loading ? 0.5 : 1 }">
+  <div
+    class="pokemon-card-gallery loading"
+    :style="{ opacity: loading ? 0.5 : 1 }"
+  >
     <PokemonCard
       v-for="pokemon in pokemonListFiltered"
       :key="pokemon.id"
