@@ -1,8 +1,10 @@
 # PokéSearch
 
 ```sh
+pnpm install
 pnpm dev
 # OR
+bun install
 bun dev
 ```
 
