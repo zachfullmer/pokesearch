@@ -1,7 +1,19 @@
 <script setup lang="ts">
 // scripts
-import { Pokemon, type UnitType } from "~/lib/pokemon";
-import { getPokemonWithId } from "~/lib/pokemon_api";
+import {
+  Pokemon,
+  type UnitType,
+  PokemonSpecies,
+  EvolutionChain,
+  type RelativeEvolutions,
+} from "~/lib/pokemon";
+import {
+  getAllPokemonInRelativeEvolutions,
+  getAllPokemonSpeciesInRelativeEvolutions,
+  getEvolutionChainWithId,
+  getPokemonSpeciesWithId,
+  getPokemonWithId,
+} from "~/lib/pokemon_api";
 
 definePageMeta({
   validate(route) {
@@ -20,7 +32,31 @@ if (typeof route.params.id == "string") {
   pokemonId = route.params.id;
 }
 
-const pokemon: Ref<Pokemon | null> = ref(await getPokemonWithId(pokemonId));
+const pokemon: Ref<Pokemon | null> = ref(null);
+const pokemonSpecies: Ref<PokemonSpecies | null> = ref(null);
+const evolutionChain: Ref<EvolutionChain | null> = ref(null);
+const relativeEvolutions: Ref<RelativeEvolutions | null> = ref(null);
+
+pokemon.value = await getPokemonWithId(pokemonId);
+if (pokemon.value) {
+  pokemonSpecies.value = await getPokemonSpeciesWithId(
+    "" + pokemon.value.speciesId
+  );
+}
+if (pokemonSpecies.value) {
+  evolutionChain.value = await getEvolutionChainWithId(
+    "" + pokemonSpecies.value?.evolutionChainId
+  );
+}
+if (evolutionChain.value) {
+  const relativeEvolutionRefs =
+    evolutionChain.value.getRelativeEvolutionRefsById(pokemonSpecies.value!.id);
+  const relativeEvolutionSpecies =
+    await getAllPokemonSpeciesInRelativeEvolutions(relativeEvolutionRefs);
+  relativeEvolutions.value = await getAllPokemonInRelativeEvolutions(
+    relativeEvolutionSpecies
+  );
+}
 
 // COMPUTED
 ///////////
@@ -34,10 +70,19 @@ const unitType: ComputedRef<UnitType> = computed(() => {
 </script>
 
 <template>
-  <NuxtLink class="nuxt-link-unstyled" to="/pokemon">
-    <BackButton />
-  </NuxtLink>
-  <PokemonInfoDisplay v-if="pokemon" :pokemon="pokemon" :unit-type="unitType" />
+  <div style="">
+    <NuxtLink class="nuxt-link-unstyled" to="/pokemon">
+      <BackButton />
+    </NuxtLink>
+    <PokemonInfoDisplay
+      v-if="pokemon && pokemonSpecies && relativeEvolutions"
+      :pokemon="pokemon"
+      :species="pokemonSpecies"
+      :evolutions="relativeEvolutions"
+      :unit-type="unitType"
+    />
+    <div class="trailing-gap"></div>
+  </div>
 </template>
 
 <style scoped>

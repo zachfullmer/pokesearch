@@ -1,7 +1,11 @@
 <script setup lang="ts">
 // scripts
-import { Pokemon, type PkApiPokemon, type UnitType } from "~/lib/pokemon";
-import { POKEMON_TYPE_LIST } from "~/lib/pokemon_types";
+import {
+  Pokemon,
+  PokemonSpecies,
+  type RelativeEvolutions,
+  type UnitType,
+} from "~/lib/pokemon";
 import { capitalize } from "~/lib/string_ops";
 
 // DATA
@@ -12,6 +16,8 @@ const props = withDefaults(
     // This view shouldn't ever have any reason to mutate the Pokémon object
     // passed to it.
     pokemon: Readonly<Pokemon>;
+    species: Readonly<PokemonSpecies>;
+    evolutions: Readonly<RelativeEvolutions>;
     unitType: UnitType;
   }>(),
   {
@@ -174,9 +180,10 @@ watch(
 </script>
 
 <template>
-  <div class="pokemon-container">
+  <div class="pokemon-header">
     <div class="pokemon-info-container">
       <div class="pokemon-name">{{ pokemonNameCapitalized }}</div>
+      <div class="pokemon-short-desc">{{ species.shortDesc }}</div>
       <div class="type-container">
         <TypeBadge v-for="type in pokemon.types" :type="type" />
       </div>
@@ -238,13 +245,42 @@ watch(
       </div>
     </div>
   </div>
+  <div class="evolution-container">
+    <div>
+      <h2>Evolves From</h2>
+      <div
+        v-if="evolutions.evolvesFrom.length"
+        class="pokemon-card-gallery justify-start"
+      >
+        <PokemonCard
+          v-for="evolvesFrom in evolutions.evolvesFrom"
+          :pokemon="evolvesFrom"
+        />
+      </div>
+      <span v-else>N/A</span>
+    </div>
+    <div>
+      <h2>Evolves Into</h2>
+      <div
+        v-if="evolutions.evolvesTo.length"
+        class="pokemon-card-gallery justify-start"
+      >
+        <PokemonCard
+          v-for="evolvesTo in evolutions.evolvesTo"
+          :pokemon="evolvesTo"
+        />
+      </div>
+      <span v-else>N/A</span>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-.pokemon-container {
+.pokemon-header {
   display: flex;
   gap: 1em;
   margin: 1em 0;
+  justify-content: space-between;
 }
 
 .pokemon-info-container {
@@ -252,12 +288,13 @@ watch(
   display: flex;
   flex-direction: column;
   width: 300px;
+  min-width: 50px;
   max-width: 300px;
   gap: 1em;
 }
 
 .pokemon-name {
-  font-size:x-large;
+  font-size: x-large;
 }
 
 .type-container {
@@ -277,12 +314,11 @@ watch(
 }
 
 .pokemon-image-info-container {
-  flex-basis: 300px;
+  flex: 0 1 300px;
 }
 
 .pokemon-image-container {
-  width: 300px;
-  height: 300px;
+  max-width: 300px;
   padding: 1em;
   border: solid 1px var(--bg3);
 }
@@ -308,5 +344,14 @@ watch(
 .sprite-selector-container-bottom {
   display: flex;
   flex-direction: row-reverse;
+}
+
+.evolution-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.evolution-container > * {
+  flex: 1 0 1px;
 }
 </style>

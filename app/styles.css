@@ -1,4 +1,6 @@
 :root {
+  --content-width: 1000px;
+  /* theme colors */
   --fg1: #123;
   --bg1: #fec;
   --bg2: rgb(209, 197, 173);
@@ -132,4 +134,19 @@ input[type="checkbox"]::after {
 input[type="checkbox"]:checked::after {
   /* show the checkmark */
   display: block;
+}
+
+.justify-start {
+  justify-content: start !important;
+}
+
+.pokemon-card-gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.trailing-gap {
+  padding-bottom: 20em;
 }

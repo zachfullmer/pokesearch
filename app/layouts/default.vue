@@ -160,7 +160,8 @@ onBeforeUnmount(() => {
 }
 
 .content-pane {
-  max-width: 1000px;
+  width: var(--content-width);
+  max-width: var(--content-width);
   margin-top: 2em;
 }
 </style>

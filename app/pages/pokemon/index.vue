@@ -36,7 +36,7 @@ const pokemonListFiltered: ComputedRef<Pokemon[]> = computed(() => {
 </script>
 
 <template>
-  <div class="pokemon-card-gallery">
+  <div class="pokemon-card-gallery trailing-gap">
     <PokemonCard
       v-for="pokemon in pokemonListFiltered"
       :key="pokemon.id"
@@ -44,13 +44,3 @@ const pokemonListFiltered: ComputedRef<Pokemon[]> = computed(() => {
     />
   </div>
 </template>
-
-<style>
-.pokemon-card-gallery {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding-bottom: 20em;
-}
-</style>
