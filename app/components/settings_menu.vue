@@ -6,7 +6,7 @@ const props = defineProps<{
   show: boolean;
 }>();
 
-const useMetricUnits = useState("useMetricUnits", () => true);
+const useMetricUnits = useState("useMetricUnits", () => false);
 </script>
 
 <template>
