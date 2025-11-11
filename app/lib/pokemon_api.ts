@@ -10,14 +10,16 @@ import {
   type RelativeEvolutionSpecies,
 } from "~/lib/pokemon";
 
+import { type NuxtError } from "#app";
+
 /**
  * Retrieve one Pokémon from its unique database ID in PokéAPI.
  * @param id Unique ID in PokéAPI.
  * @returns A Pokémon result, async.
  */
-export async function getPokemonWithId(id: string): Promise<Pokemon | null> {
+export async function getPokemonWithId(id: string): Promise<Pokemon> {
   const endpoint = `/api/pokemon/${id}`;
-  const { data } = await useAsyncData(
+  const { data, error } = await useAsyncData(
     endpoint,
     async () => {
       // If the Pokémon is not cached, load it from the API. If the API
@@ -40,7 +42,11 @@ export async function getPokemonWithId(id: string): Promise<Pokemon | null> {
   if (data.value) {
     return Pokemon.fromSerialized(data.value as PokemonSerialized);
   }
-  return null;
+  const nuxtError = error.value as NuxtError;
+  if(nuxtError.statusCode == 404) {
+    nuxtError.message = "Could not find Pokémon. This ID may not exist.";
+  }
+  throw createError(nuxtError);
 }
 
 /**
@@ -50,8 +56,14 @@ export async function getPokemonWithId(id: string): Promise<Pokemon | null> {
  */
 export async function getAllPokemonWithIds(
   ...ids: string[]
-): Promise<(Pokemon | null)[]> {
-  return Promise.all(ids.map((id) => getPokemonWithId(id)));
+): Promise<(Pokemon | NuxtError)[]> {
+  return Promise.all(ids.map((id) => {
+    try {
+      return getPokemonWithId(id);
+    } catch(err) {
+      return err as NuxtError;
+    }
+  }));
 }
 
 /**
@@ -75,9 +87,9 @@ export async function getAllPokemonSpeciesInRelativeEvolutions(
     ),
   ]);
   return {
-    evolvesFrom: evolvesFromSpecies.filter(spec=>spec) as PokemonSpecies[],
-    evolvesTo: evolvesToSpecies.filter(spec=>spec) as PokemonSpecies[]
-  }
+    evolvesFrom: evolvesFromSpecies.filter((spec) => spec) as PokemonSpecies[],
+    evolvesTo: evolvesToSpecies.filter((spec) => spec) as PokemonSpecies[],
+  };
 }
 
 /**
@@ -105,9 +117,9 @@ export async function getAllPokemonInRelativeEvolutions(
     ),
   ]);
   return {
-    evolvesFrom: evolvesFrom.filter(pk=>pk) as Pokemon[],
-    evolvesTo: evolvesTo.filter(pk=>pk) as Pokemon[]
-  }
+    evolvesFrom: evolvesFrom.filter((pk: any) => pk) as Pokemon[],
+    evolvesTo: evolvesTo.filter((pk: any) => pk) as Pokemon[],
+  };
 }
 
 /**
@@ -117,9 +129,9 @@ export async function getAllPokemonInRelativeEvolutions(
  */
 export async function getPokemonSpeciesWithId(
   id: string
-): Promise<PokemonSpecies | null> {
+): Promise<PokemonSpecies> {
   const endpoint = `/api/species/${id}`;
-  const { data } = await useAsyncData(
+  const { data, error } = await useAsyncData(
     endpoint,
     async () => {
       // If the Pokémon Species is not cached, load it from the API. If the API
@@ -144,7 +156,11 @@ export async function getPokemonSpeciesWithId(
       data.value as PokemonSpeciesSerialized
     );
   }
-  return null;
+  const nuxtError = error.value as NuxtError;
+  if(nuxtError.statusCode == 404) {
+    nuxtError.message = "Could not find Pokémon species. This ID may not exist.";
+  }
+  throw createError(nuxtError);
 }
 
 /**
@@ -154,9 +170,9 @@ export async function getPokemonSpeciesWithId(
  */
 export async function getEvolutionChainWithId(
   id: string
-): Promise<EvolutionChain | null> {
+): Promise<EvolutionChain> {
   const endpoint = `/api/evolution/${id}`;
-  const { data } = await useAsyncData(
+  const { data, error } = await useAsyncData(
     endpoint,
     async () => {
       // If the Evolution Chain is not cached, load it from the API. If the API
@@ -181,5 +197,9 @@ export async function getEvolutionChainWithId(
       data.value as EvolutionChainSerialized
     );
   }
-  return null;
+  const nuxtError = error.value as NuxtError;
+  if(nuxtError.statusCode == 404) {
+    nuxtError.message = "Could not find Pokémon evolution chain. This ID may not exist.";
+  }
+  throw createError(nuxtError);
 }

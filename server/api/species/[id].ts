@@ -1,4 +1,8 @@
-import { PkApiPokemonSpecies, PokemonSpecies, PokemonSpeciesSerialized } from "~/lib/pokemon";
+import {
+  PkApiPokemonSpecies,
+  PokemonSpecies,
+  PokemonSpeciesSerialized,
+} from "~/lib/pokemon";
 
 export default defineEventHandler(
   async (event): Promise<Readonly<PokemonSpeciesSerialized> | null> => {
@@ -6,9 +10,13 @@ export default defineEventHandler(
     if (!idStr) {
       return null;
     }
-    const res: PkApiPokemonSpecies = await $fetch(
-      `https://pokeapi.co/api/v2/pokemon-species/${idStr}`
-    );
-    return PokemonSpecies.fromPkApiPokemonSpecies(res);
+    try {
+      const res: PkApiPokemonSpecies = await $fetch(
+        `https://pokeapi.co/api/v2/pokemon-species/${idStr}`
+      );
+      return PokemonSpecies.fromPkApiPokemonSpecies(res);
+    } catch (err) {
+      throw createError(err as unknown as any);
+    }
   }
 );

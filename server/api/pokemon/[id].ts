@@ -6,9 +6,13 @@ export default defineEventHandler(
     if (!idStr) {
       return null;
     }
-    const res: PkApiPokemon = await $fetch(
-      `https://pokeapi.co/api/v2/pokemon/${idStr}`
-    );
-    return Pokemon.fromPkApiPokemon(res);
+    try {
+      const res: PkApiPokemon = await $fetch(
+        `https://pokeapi.co/api/v2/pokemon/${idStr}`
+      );
+      return Pokemon.fromPkApiPokemon(res);
+    } catch (err) {
+      throw createError(err as unknown as any);
+    }
   }
 );

@@ -6,9 +6,13 @@ export default defineEventHandler(
     if (!idStr) {
       return null;
     }
-    const res: PkApiEvolutionChain = await $fetch(
-      `https://pokeapi.co/api/v2/evolution-chain/${idStr}`
-    );
-    return EvolutionChain.fromPkApiEvolutionChain(res);
+    try {
+      const res: PkApiEvolutionChain = await $fetch(
+        `https://pokeapi.co/api/v2/evolution-chain/${idStr}`
+      );
+      return EvolutionChain.fromPkApiEvolutionChain(res);
+    } catch (err) {
+      throw createError(err as unknown as any);
+    }
   }
 );

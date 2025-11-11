@@ -39,25 +39,21 @@ const evolutionChain: Ref<EvolutionChain | null> = ref(null);
 const relativeEvolutions: Ref<RelativeEvolutions | null> = ref(null);
 
 pokemon.value = await getPokemonWithId(pokemonId);
-if (pokemon.value) {
-  pokemonSpecies.value = await getPokemonSpeciesWithId(
-    "" + pokemon.value.speciesId
-  );
-}
-if (pokemonSpecies.value) {
-  evolutionChain.value = await getEvolutionChainWithId(
-    "" + pokemonSpecies.value?.evolutionChainId
-  );
-}
-if (evolutionChain.value) {
-  const relativeEvolutionRefs =
-    evolutionChain.value.getRelativeEvolutionRefsById(pokemonSpecies.value!.id);
-  const relativeEvolutionSpecies =
-    await getAllPokemonSpeciesInRelativeEvolutions(relativeEvolutionRefs);
-  relativeEvolutions.value = await getAllPokemonInRelativeEvolutions(
-    relativeEvolutionSpecies
-  );
-}
+pokemonSpecies.value = await getPokemonSpeciesWithId(
+  "" + pokemon.value.speciesId
+);
+evolutionChain.value = await getEvolutionChainWithId(
+  "" + pokemonSpecies.value?.evolutionChainId
+);
+const relativeEvolutionRefs = evolutionChain.value.getRelativeEvolutionRefsById(
+  pokemonSpecies.value!.id
+);
+const relativeEvolutionSpecies = await getAllPokemonSpeciesInRelativeEvolutions(
+  relativeEvolutionRefs
+);
+relativeEvolutions.value = await getAllPokemonInRelativeEvolutions(
+  relativeEvolutionSpecies
+);
 
 // COMPUTED
 ///////////
@@ -87,7 +83,9 @@ const unitType: ComputedRef<UnitType> = computed(() => {
       :evolutions="relativeEvolutions"
       :unit-type="unitType"
     />
-    <div v-else class="error-msg">Failed to load Pokémon. This ID may not exist.</div>
+    <div v-else class="error-msg">
+      Failed to load Pokémon. This ID may not exist.
+    </div>
     <div class="trailing-gap"></div>
   </div>
 </template>
