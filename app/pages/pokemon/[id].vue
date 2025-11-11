@@ -87,13 +87,13 @@ const unitType: ComputedRef<UnitType> = computed(() => {
       :evolutions="relativeEvolutions"
       :unit-type="unitType"
     />
+    <div v-else class="error-msg">Failed to load Pokémon. This ID may not exist.</div>
     <div class="trailing-gap"></div>
   </div>
 </template>
 
 <style scoped>
-.type-container {
-  display: flex;
-  gap: 0.6em;
+.error-msg {
+  margin: 0.6em 0;
 }
 </style>
