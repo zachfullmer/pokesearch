@@ -14,6 +14,7 @@ import {
   getPokemonSpeciesWithId,
   getPokemonWithId,
 } from "~/lib/pokemon_api";
+import IconArrowLeft from "~/assets/icons/arrow_left.svg";
 
 definePageMeta({
   validate(route) {
@@ -72,7 +73,12 @@ const unitType: ComputedRef<UnitType> = computed(() => {
 <template>
   <div style="">
     <NuxtLink class="nuxt-link-unstyled" to="/pokemon">
-      <BackButton />
+      <ModularButton>
+        <div>
+          <IconArrowLeft />
+        </div>
+        <span>Back</span>
+      </ModularButton>
     </NuxtLink>
     <PokemonInfoDisplay
       v-if="pokemon && pokemonSpecies && relativeEvolutions"
