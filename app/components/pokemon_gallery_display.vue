@@ -27,7 +27,7 @@ watch(
   async () => {
     loading.value = true;
     const newPokemonList = await getAllPokemonWithIds(
-      ...range(props.start, props.end).map((id) => "" + id)
+      ...[...range(props.start, props.end)].map((id) => "" + id)
     );
     if (newPokemonList[0]?.id == props.start) {
       pokemonList.value = newPokemonList;

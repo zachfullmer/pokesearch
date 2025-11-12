@@ -6,4 +6,11 @@ export default defineNuxtConfig({
   routeRules: {
     "/api/*": { cache: { maxAge: 3600 } },
   },
+  vite: {
+    optimizeDeps: {
+      esbuildOptions: {
+        target: "es2022",
+      },
+    },
+  },
 });
